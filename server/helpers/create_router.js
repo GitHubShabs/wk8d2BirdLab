@@ -28,19 +28,47 @@ const createRouter = function (collection) {
         res.json({ status: 500, error: err });
       });
   });
+
+ router.post('/', (req, res) => {
+   const newSighting = req.body;
+   collection
+   .insertOne(newSighting)
+   .then(() => collection.find().toArray())
+   .then((doc) => res.json(doc));
+ })
+
+
+
 // destroy***********
   router.delete('/:id', (req, res) => {
     const id = req.params.id;
     collection
       .deleteOne({ _id: ObjectID(id) })
       .then(() => collection.find().toArray())
-      .then((docs) => res.json(docs))
+      .then((doc) => res.json(doc))
       .catch((err) => {
         console.error(err);
         res.status(500);
         res.json({ status: 500, error: err });
       });
   });
+
+// UPDATE***********
+router.put('/:id', (req, res) => {
+  const id = req.params.id;
+  const updatedSighting = req.body;
+  collection
+    .updateOne(
+      {_id: ObjectID(id)},
+      {$set: updatedSighting}
+    )
+  .then(() => collection.find().toArray())
+  .then((doc) =>res.json(doc))
+})
+
+
+
+
 
   return router;
 
