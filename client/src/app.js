@@ -11,8 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sightingsGridView = new SightingGridView(sightingsContainer);
   sightingsGridView.bindEvents();
 
-  const url = 'http://localhost:3000/api/sightings';
-  const sightings = new Sightings(url);
+  const sightings = new Sightings();
   sightings.bindEvents();
   sightings.getData();
 });
